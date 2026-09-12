@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/singleThreadedServer.iml" filepath="$PROJECT_DIR$/.idea/singleThreadedServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ServerInJava.iml" filepath="$PROJECT_DIR$/.idea/ServerInJava.iml" />
     </modules>
   </component>
 </project>
