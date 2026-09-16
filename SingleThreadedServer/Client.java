@@ -19,7 +19,9 @@ public class Client {
         toSocket.flush();
         String line = fromSocket.readLine();
         System.out.println("Response from the server is " + line);
-
+        toSocket.close();
+        fromSocket.close();
+        socket.close();
     }
 
     public static void main(String[] args) {

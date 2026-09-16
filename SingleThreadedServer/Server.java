@@ -24,6 +24,9 @@ public class Server {
                 // input stream just bytes , inputstream reader converts it to characters , buffer does the readline formating etc , whereas in printing printwriter does both the jobs
                 toClient.println("Hello from the server");
                 toClient.flush();
+                fromClient.close();
+                toClient.close();
+                acceptedConnections.close();
             }
             catch(IOException ex){
                 ex.printStackTrace();
