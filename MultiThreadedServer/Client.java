@@ -6,33 +6,28 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client {
 
-    public Runnable getRunnable() throws UnknownHostException, IOException {
-        return new Runnable() {
-            @Override
-            public void run() {
-                int port = 8010;
-                try {
-                    InetAddress address = InetAddress.getByName("localhost");
-                    Socket socket = new Socket(address, port);
-                    try (
-                            PrintWriter toSocket = new PrintWriter(socket.getOutputStream(), true);
-                            BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-                    ) {
-                        toSocket.println("Hello from Client " + socket.getLocalSocketAddress());
-                        String line = fromSocket.readLine();
-                        System.out.println("Response from Server " + line);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    // The socket will be closed automatically when leaving the try-with-resources block
+    public Runnable getRunnable() {
+        return () -> {
+            int port = 8010;
+            try {
+                InetAddress address = InetAddress.getByName("localhost");
+                Socket socket = new Socket(address, port);
+                try (
+                        PrintWriter toSocket = new PrintWriter(socket.getOutputStream(), true);
+                        BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                ) {
+                    toSocket.println("Hello from Client " + socket.getLocalSocketAddress());
+                    String line = fromSocket.readLine();
+                    System.out.println("Response from Server " + line);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                // socket auto-closes because of try-with-resources
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         };
     }
@@ -47,6 +42,6 @@ public class Client {
                 return;
             }
         }
-        return;
     }
 }
+// this is simple , just create 100 threads for each request sent to the server nd rrn them all at once , each thread sends request to the server , each threds uses lamda expression to implement the runnable interface and that is passed in the thread constuctor
